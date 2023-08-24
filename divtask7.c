@@ -8,18 +8,9 @@
  */
 void f_div(stack_t **head, unsigned int counter)
 {
-	stack_t *h;
-	int len = 0, quotient;
+	stack_t *h = *head;
 
-	h = *head;
-
-	while (h)
-	{
-		h = h->next;
-		len++;
-	}
-
-	if (len < 2)
+	if (!h || !h->next)
 	{
 		fprintf(stderr, "L%d: can't div, stack too short\n", counter);
 		fclose(bus.file);
@@ -27,8 +18,6 @@ void f_div(stack_t **head, unsigned int counter)
 		free_stack(*head);
 		exit(EXIT_FAILURE);
 	}
-
-	h = *head;
 
 	if (h->n == 0)
 	{
@@ -39,8 +28,7 @@ void f_div(stack_t **head, unsigned int counter)
 		exit(EXIT_FAILURE);
 	}
 
-	quotient = h->next->n / h->n;
-	h->next->n = quotient;
+	h->next->n /= h->n;
 	*head = h->next;
 	free(h);
 }
