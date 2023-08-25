@@ -8,9 +8,8 @@
  */
 void f_pchar(stack_t **head, unsigned int counter)
 {
-	stack_t *h;
-
-	h = *head;
+	int value;
+	stack_t *h = *head;
 
 	if (!h)
 	{
@@ -21,7 +20,8 @@ void f_pchar(stack_t **head, unsigned int counter)
 		exit(EXIT_FAILURE);
 	}
 
-	if (h->n > 127 || h->n < 0)
+	value = h->n;
+	if (value > 127 || value < 0)
 	{
 		fprintf(stderr, "L%d: can't pchar, value out of range\n", counter);
 		fclose(bus.file);
@@ -30,5 +30,5 @@ void f_pchar(stack_t **head, unsigned int counter)
 		exit(EXIT_FAILURE);
 	}
 
-	printf("%c\n", h->n);
+	printf("%c\n", value);
 }
