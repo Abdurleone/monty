@@ -7,11 +7,20 @@
  * @counter: The line_number
  * Return: No return
  */
+
 void f_mod(stack_t **head, unsigned int counter)
 {
-	int divisor;
+	stack_t *h;
+	int len = 0, aux;
 
-	if (!(*head) || !(*head)->next)
+	h = *head;
+	while (h)
+	{
+		h = h->next;
+		len++;
+	}
+
+	if (len < 2)
 	{
 		fprintf(stderr, "L%d: can't mod, stack too short\n", counter);
 		fclose(bus.file);
@@ -20,8 +29,8 @@ void f_mod(stack_t **head, unsigned int counter)
 		exit(EXIT_FAILURE);
 	}
 
-	divisor = (*head)->n;
-	if (divisor == 0)
+	h = *head;
+	if (h->n == 0)
 	{
 		fprintf(stderr, "L%d: division by zero\n", counter);
 		fclose(bus.file);
@@ -30,6 +39,8 @@ void f_mod(stack_t **head, unsigned int counter)
 		exit(EXIT_FAILURE);
 	}
 
-	(*head)->next->n %= divisor;
+	aux = h->next->n % h->n;
+	h->next->n = aux;
 	*head = (*head)->next;
+	free(h);
 }
